@@ -1,10 +1,24 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
+import axios from "axios";
 
 const Pagination = () => {
   // TODO: Remove below const and instead import them from chakra
   const Button = () => <div />;
   const ButtonGroup = () => <div />;
   const Select = () => <div />;
+
+  const [page, setPage] = useState(1)
+  const [limit, setLimit] = useState(3)
+  const [todos, setTodos] = useState([])
+
+  useEffect(() => {
+      const getTodo=async()=>{
+        let res=await axios.get(`http://localhost:8080/products?_page=${page}&_limit=${limit}`)
+        setTodos(res.json);
+        console.log(res.data)
+      }
+      getTodo()
+  },[])
 
   return (
     <ButtonGroup>
